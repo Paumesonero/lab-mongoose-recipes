@@ -15,8 +15,28 @@ mongoose
     // Before adding any recipes to the database, let's remove all existing ones
     return Recipe.deleteMany()
   })
+  // .then(() => {
+  //   let newRecipe = Recipe.create({
+  //     title: 'Eggs Benedict', level: 'Amateur Chef', ingredients: ['eggs', 'bacon', 'bread', 'lemon', 'butter'],
+  //     dishType: 'breakfast', duration: 20, creator: 'Chef Mic'
+  //   })
+
+  //   return newRecipe
+  // })
+  // .then((recipe) => {
+  //   console.log('Created', recipe.title);
+  // })
   .then(() => {
-    // Run your code here, after you have insured that the connection was made
+    const recipesInserted = Recipe.insertMany(data)
+    return recipesInserted
+  })
+  .then((recipesTitle) => {
+    recipesTitle.forEach((el) => {
+      console.log(el.title)
+    })
+  })
+  .then(() => {
+    mongoose.connection.close();
   })
   .catch(error => {
     console.error('Error connecting to the database', error);
