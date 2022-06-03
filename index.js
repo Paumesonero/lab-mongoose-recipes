@@ -15,17 +15,17 @@ mongoose
     // Before adding any recipes to the database, let's remove all existing ones
     return Recipe.deleteMany()
   })
-  // .then(() => {
-  //   let newRecipe = Recipe.create({
-  //     title: 'Eggs Benedict', level: 'Amateur Chef', ingredients: ['eggs', 'bacon', 'bread', 'lemon', 'butter'],
-  //     dishType: 'breakfast', duration: 20, creator: 'Chef Mic'
-  //   })
+  .then(() => {
+    let newRecipe = Recipe.create({
+      title: 'Eggs Benedict', level: 'Amateur Chef', ingredients: ['eggs', 'bacon', 'bread', 'lemon', 'butter'],
+      dishType: 'breakfast', duration: 20, creator: 'Chef Mic'
+    })
 
-  //   return newRecipe
-  // })
-  // .then((recipe) => {
-  //   console.log('Created', recipe.title);
-  // })
+    return newRecipe
+  })
+  .then((recipe) => {
+    console.log('Created', recipe.title);
+  })
   .then(() => {
     const recipesInserted = Recipe.insertMany(data)
     return recipesInserted
@@ -34,6 +34,16 @@ mongoose
     recipesTitle.forEach((el) => {
       console.log(el.title)
     })
+  })
+  .then(() => {
+    const recipeDuration = Recipe.findOneAndUpdate({ title: 'Rigatoni alla Genovese' }, { duration: 100 })
+    console.log('Well done, you have changed the Duration to a 100')
+    return recipeDuration
+  })
+  .then(() => {
+    const deletedRecipe = Recipe.deleteOne({ title: 'Carrot Cake' })
+    console.log('You Have deleted Carrot Cake')
+    return deletedRecipe
   })
   .then(() => {
     mongoose.connection.close();
